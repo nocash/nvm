@@ -266,6 +266,9 @@ autoload -U add-zsh-hook
 load-nvmrc() {
   if [[ -f .nvmrc && -r .nvmrc ]]; then
     nvm use
+    export NVM_RC_DIR=$(pwd)
+  elif [[ $(pwd) =~ "$NVM_RC_DIR" ]]; then
+    # Do nothing if we move to a subdirectory.
   elif [[ $(nvm version) != $(nvm version default)  ]]; then
     echo "Reverting to nvm default version"
     nvm use default
